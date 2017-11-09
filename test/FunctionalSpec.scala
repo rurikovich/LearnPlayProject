@@ -1,22 +1,24 @@
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.http.Status
+import play.api.libs.json.Json
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 
+
 /**
- * Functional tests start a Play application internally, available
- * as `app`.
- */
+  * Functional tests start a Play application internally, available
+  * as `app`.
+  */
 class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite {
 
   "Routes" should {
 
-    "send 404 on a bad request" in  {
+    "send 404 on a bad request" in {
       route(app, FakeRequest(GET, "/boum")).map(status(_)) mustBe Some(NOT_FOUND)
     }
 
-    "send 200 on a good request" in  {
+    "send 200 on a good request" in {
       route(app, FakeRequest(GET, "/")).map(status(_)) mustBe Some(OK)
     }
 
@@ -29,7 +31,6 @@ class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite {
 
       status(home) mustBe Status.OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Your new application is ready.")
     }
 
   }
@@ -43,4 +44,17 @@ class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite {
     }
 
   }
+
+  "FigureController" should {
+
+    "correct json" in {
+      val name="testname"
+      val addPointsRequest = route(app, FakeRequest(POST, "/addFigure").withJsonBody(Json.parse(s"""{ "name": "$name" }"""))).get
+
+      status(addPointsRequest) mustBe Status.OK
+      contentAsString(addPointsRequest) must include(s"""Hello, List  with  name="${name}""")
+    }
+
+  }
+
 }

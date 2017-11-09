@@ -13,9 +13,10 @@ class FigureController @Inject()(cc: ControllerComponents) extends AbstractContr
 
   def addFigure() = Action {
     request => {
-      val text = request.body.asText.getOrElse("")
-      val value = s"Hello, List  with  name=$text"
-      println(value)
+      val json = request.body.asJson.get
+
+      val name = (json \ "name").get
+      val value = s"Hello, List  with  name=${name}"
       Ok(value)
     }
   }
