@@ -44,7 +44,7 @@ class FigureController @Inject()(cc: ControllerComponents) extends AbstractContr
       val koordsList = (json \ "points").get.as[List[Double]]
       val pointList: List[(Double, Double)] = koordsList.grouped(2).map { case List(a, b) => (a, b) }.toList
 
-      var figures: Set[String] = FigureManager.findIntersectionWithFirures(pointList)
+      var figures: Set[String] = FigureManager.findIntersectionsWithFirures(pointList)
 
       Ok(s"CheckRoute find figures ${figures mkString ","}")
     }

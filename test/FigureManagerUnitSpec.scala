@@ -25,9 +25,9 @@ class FigureManagerUnitSpec extends PlaySpec {
       FigureManager.addFigure("triangle1", List(4, 1, 6, 3, 5, 4))
       FigureManager.addFigure("polygon2", List(3, 2, 4, 2, 5, 3, 4, 4, 3, 3))
 
-      FigureManager.findIntersectionWithFirures(List((1.5, 1.5), (2.5, 2.5), (4.9, 3))) must equal(Set("polygon1", "triangle1", "polygon2"))
-      FigureManager.findIntersectionWithFirures(List((5, 1), (5.5, 3), (6, 5))) must equal(Set("triangle1"))
-      FigureManager.findIntersectionWithFirures(List((5, 1), (6, 2), (7, 5))) must equal(Set())
+      FigureManager.findIntersectionsWithFirures(List((1.5, 1.5), (2.5, 2.5), (4.9, 3))) must equal(Set("polygon1", "triangle1", "polygon2"))
+      FigureManager.findIntersectionsWithFirures(List((5, 1), (5.5, 3), (6, 5))) must equal(Set("triangle1"))
+      FigureManager.findIntersectionsWithFirures(List((5, 1), (6, 2), (7, 5))) must equal(Set())
     }
 
   }

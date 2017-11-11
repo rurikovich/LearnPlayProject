@@ -12,26 +12,15 @@ object FigureManager extends FigureService with PolygonConvexChecker {
     figures += Figure(name, points)
   }
 
-  def findIntersectionWithFirures(pointList: List[(Double, Double)]): Set[String] = {
-    var figuresNames = Set[String]()
-
-    for (point <- pointList) {
-      for (f <- figures.toList) {
-        val fPoints = f.points.grouped(2).map { case List(a, b) => (a, b) }.toList
-
-        // выпуклый многоугольник можно разбить на треугольники
-        // сочетанием одной его вершины со всеми остальными попарно
-        // Например для (в1,в2,в3,в4,в5)->(в1,в2,в3) (в1,в3,в4) (в1,в4,в5)
-        val p1 = fPoints.head
-        for (List(p2, p3) <- fPoints.tail.sliding(2)) {
-          val isPointInTriangle: Boolean = checkTriangleContainsPoint(p1, p2, p3, point)
-          if (isPointInTriangle) {
-            figuresNames += f.name
-          }
-        }
-      }
-    }
-    figuresNames
+  def findIntersectionsWithFirures(pointList: List[(Double, Double)]): Set[String] = {
+    figures.toList.filter(f => {
+      val p1 = f.getGroupedPoints.head
+      f.getGroupedPoints.tail.sliding(2).exists(p2p3 => {
+        val p2 = p2p3(0)
+        val p3 = p2p3(1)
+        pointList.exists(point => checkTriangleContainsPoint(p1, p2, p3, point))
+      })
+    }).map(f => f.name).toSet
   }
 
   def checkTriangleContainsPoint(p1: (Double, Double), p2: (Double, Double), p3: (Double, Double), point: (Double, Double)): Boolean = {
