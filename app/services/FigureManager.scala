@@ -1,7 +1,5 @@
 package services
 
-import java.lang.Math.signum
-
 import pojos.Figure
 
 import scala.collection.mutable.ListBuffer
@@ -41,7 +39,7 @@ object FigureManager extends FigureService with PolygonConvexChecker {
     val exp2 = (p2._1 - point._1) * (p3._2 - p2._2) - (p3._1 - p2._1) * (p2._2 - point._2)
     val exp3 = (p3._1 - point._1) * (p1._2 - p3._2) - (p1._1 - p3._1) * (p3._2 - point._2)
 
-    return (signum(exp1) == signum(exp2) && signum(exp2) == signum(exp3)) || (exp1 * exp2 * exp3 == 0)
+    return (exp1 >= 0 && exp2 >= 0 && exp3 >= 0) || (exp1 <= 0 && exp2 <= 0 && exp3 <= 0)
   }
 
 }
