@@ -3,49 +3,52 @@ if (window.console) {
 }
 
 
-$(document).ready(function() {
+$(document).ready(function () {
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+
+    var stage = new Konva.Stage({
+        container: 'container',
+        width: width,
+        height: height
+    });
+
+    var layer = new Konva.Layer();
+    // add the layer to the stage
+    stage.add(layer);
 
 
     $.ajax({
         url: '/getFigures',
-        success: function(data) {
-            var width = window.innerWidth;
-            var height = window.innerHeight;
-
-            var stage = new Konva.Stage({
-                container: 'container',
-                width: width,
-                height: height
-            });
-
-            var layer = new Konva.Layer();
-            console.log(data);
-            data.forEach(function(item, i, arr) {
-                console.log(item);
-                console.log(item.points);
+        success: function (data) {
+            data.forEach(function (item, i, arr) {
                 var poly = new Konva.Line({
                     points: item.points,
-                    fill: '#00D2FF',
                     stroke: 'black',
                     strokeWidth: 5,
-                    closed : true
+                    closed: true
                 });
-
-                // add the shape to the layer
                 layer.add(poly);
-
             });
-
-
-            // add the layer to the stage
-            stage.add(layer);
-
-
+            layer.draw();
         }
     });
 
 
-
+    $.ajax({
+        url: '/getLastRoute',
+        success: function (data) {
+            var route = new Konva.Line({
+                points: data,
+                stroke: 'green',
+                strokeWidth: 2,
+                lineJoin: 'round',
+                dash: [33, 10]
+            });
+            layer.add(route);
+            layer.draw();
+        }
+    });
 
 
 });

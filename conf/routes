@@ -7,6 +7,8 @@ POST        /addFigure           controllers.FigureController.addFigure
 GET         /getFigures          controllers.FigureController.getFigures
 
 POST        /checkRoute          controllers.FigureController.checkRoute
+
+GET         /getLastRoute        controllers.FigureController.getLastRoute
 # An example controller showing a sample home page
 GET         /                    controllers.HomeController.index
 

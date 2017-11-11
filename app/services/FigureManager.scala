@@ -7,6 +7,7 @@ import scala.collection.mutable.ListBuffer
 object FigureManager extends FigureService with PolygonConvexChecker {
 
   val figures = new ListBuffer[Figure]
+  var lastRoute: List[Double] = List.empty
 
   override def addFigure(name: String, points: List[Double]): Unit = {
     figures += Figure(name, points)

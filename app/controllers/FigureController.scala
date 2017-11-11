@@ -46,11 +46,15 @@ class FigureController @Inject()(cc: ControllerComponents) extends AbstractContr
 
       var figures: Set[String] = FigureManager.findIntersectionsWithFirures(pointList)
 
+      FigureManager.lastRoute = koordsList
+
       Ok(s"CheckRoute find figures ${figures mkString ","}")
     }
   }
 
-
+  def getLastRoute = Action {
+    Ok(Json.toJson(FigureManager.lastRoute))
+  }
 
 
 }
