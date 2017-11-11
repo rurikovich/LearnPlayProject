@@ -14,7 +14,6 @@ import services.FigureManager
 class FigureController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
 
-
   def addFigure() = Action {
     request => {
       val json = request.body.asJson.get
@@ -37,6 +36,20 @@ class FigureController @Inject()(cc: ControllerComponents) extends AbstractContr
   def getFigures = Action {
     val json = Json.toJson(FigureManager.figures.toList)
     Ok(json)
+  }
+
+  def checkRoute = Action {
+    request => {
+      val json = request.body.asJson.get
+      val points = (json \ "points").get.as[List[Double]]
+
+      FigureManager.figures.toList.foreach(
+        print(_)
+      )
+
+
+      Ok("CheckRoute find figures")
+    }
   }
 
 }

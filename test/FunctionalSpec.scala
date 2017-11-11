@@ -26,12 +26,21 @@ class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite {
 
     "incorrect json" in {
       val name = "testname"
-      val points = List(1, 1, 3,1,3,1,3,3,2,2)
+      val points = List(1, 1, 3,1,1,4,2,2)
       val jsonTemplate = s"""{ "name": "$name", "points":[${points mkString ","}] }"""
       val addPointsRequest = route(app, FakeRequest(POST, "/addFigure").withJsonBody(Json.parse(jsonTemplate))).get
 
       status(addPointsRequest) mustBe Status.BAD_REQUEST
       contentAsString(addPointsRequest) must include(s"""Failed to add figure with name="$name"""")
+    }
+
+    "checkRoute test" in {
+      val points = List(1, 1, 3, 1, 3, 1, 3, 3, 2, 2)
+      val jsonTemplate = s"""{ "points":[${points mkString ","}] }"""
+      val checkRouteRequest = route(app, FakeRequest(POST, "/checkRoute").withJsonBody(Json.parse(jsonTemplate))).get
+
+      status(checkRouteRequest) mustBe Status.OK
+      contentAsString(checkRouteRequest) must include(s"""CheckRoute find figures""")
     }
 
   }
