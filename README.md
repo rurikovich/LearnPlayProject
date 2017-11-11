@@ -1,5 +1,5 @@
 # LearnPlayProject
-Проект для изучения Scala, Play Framework 2, Google Guice и ряда других технологий,
+Проект для изучения Scala, Play Framework 2, ScalaTest, Google Guice и ряда других технологий,
 список которых будет пополняться по мере их появления в проекте.
 
 Постановка задачи:
